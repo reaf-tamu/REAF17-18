@@ -21,7 +21,6 @@ while True:
         ser.flush()
         abc = ser.read(bytesWritten).decode('utf-8')
         print (abc)
-        ser.flush()
         
         
     except KeyboardInterrupt:
