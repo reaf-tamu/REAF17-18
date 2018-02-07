@@ -1,2 +1,2 @@
 import serial
-arduino = serial.Serial('COM3', 115200, timeout=.1)
+arduino = serial.Serial('COM4', 115200, timeout=.1)
