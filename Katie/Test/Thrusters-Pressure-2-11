@@ -1,0 +1,76 @@
+#include <Servo.h>
+
+byte thruster1 = 2;
+byte thruster2 = 4;
+byte thruster3 = 6;
+byte thruster4 = 8;
+
+
+
+Servo servo1;
+Servo servo2;
+Servo servo3;
+Servo servo4;
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Hi");
+  servo1.attach(thruster1);
+  servo2.attach(thruster2);
+  servo3.attach(thruster3);
+  servo4.attach(thruster4);
+  
+
+  servo1.writeMicroseconds(1500); // send "stop" signal to ESC.
+  servo2.writeMicroseconds(1500); // send "stop" signal to ESC.
+  servo3.writeMicroseconds(1500); // send "stop" signal to ESC.
+  servo4.writeMicroseconds(1500); // send "stop" signal to ESC.
+  
+  delay(1000); // delay to allow the ESC to recognize the stopped signal
+}
+
+float count;
+float total;
+float average;
+float inches;
+float distance = 0.5; //Distance from bottom of robot to middle hole of sensor
+float initial = 14.73; //Initial pressure above water
+float sixInches = 14.87; //Pressure at 6 inches below the water (horizontal)
+float msPerReading = 100; 
+
+
+void loop() {
+  int signal = 1200; // Set signal value, which should be between 1100 and 1900
+
+  servo1.writeMicroseconds(signal); // Send signal to ESC.
+  servo2.writeMicroseconds(signal); // Send signal to ESC.  
+  servo3.writeMicroseconds(signal); // Send signal to ESC.
+  servo4.writeMicroseconds(signal); // Send signal to ESC.
+
+
+   count = ++count;
+float sensorValue = analogRead(A0);
+float pressure = sensorValue/15.0;
+//Serial.println("Pressure:");
+//Serial.println(pressure);
+//Serial.println("Count:");
+//Serial.println(count);
+delay(1);
+ total = total + pressure;
+ //Serial.println("Total:");
+ //Serial.println(total);
+if (count == msPerReading) {
+ average = total / count;
+ inches = ((average - initial) / ((sixInches - initial)/6)) + distance;
+
+ //DELAY MIGHT BE AN ISSUE WITH THRUSTERS
+ delay(1000);
+  Serial.print("Average:");
+  Serial.println(average);
+  Serial.print("Inches Below Surface:");
+  Serial.println(inches);
+   count = 0;
+   total = 0;
+
+}
+}
