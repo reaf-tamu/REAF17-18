@@ -5,14 +5,20 @@ import time
 
 cap = cv2.VideoCapture(0)
 
+fgbg = cv2.createBackgroundSubtractorMOG2()
+
 while True:
     ret, frame = cap.read()
 
-    edges = cv2.Canny(frame, 100, 200)  
+    bkgd = fgbg.apply(frame)
+
+    blur = cv2.GaussianBlur(bkgd, (5,5), 0, 0)
+
+    edges = cv2.Canny(blur, 100, 200)  
     
     cv2.imshow('Edges', edges)
 
-    circles = cv2.HoughCircles(edges, cv2.HOUGH_GRADIENT, 1.2, 100)
+    circles = cv2.HoughCircles(edges, cv2.HOUGH_GRADIENT, 1.2, 2000)
 
     if circles is not None:
         circles = np.round(circles[0,:]).astype("int")
