@@ -9,13 +9,13 @@ while(True):
     # Capture frame-by-frame
     ret, frame = cap.read()
     
-    edges = cv2.Canny(frame,100,200)
+    edge = cv2.Canny(frame,200,100)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     #blur= cv2.blur(frame,1) idk how to use blur
     
-    cv2.imshow('original',frame)
-    cv2.imshow('canny',edges)
-    cv2.imshow('grayscale',gray)
+    #cv2.imshow('original',frame)
+    cv2.imshow('canny',edge)
+    #cv2.imshow('grayscale',gray)
     #cv2.imshow('blur',blur)
     
     #plt.imshow(edges,cmap = 'gray')
