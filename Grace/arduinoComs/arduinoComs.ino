@@ -8,7 +8,6 @@ void loop() {
        char inputBuffer[18];
        int b = Serial.readBytes(inputBuffer, 17); 
        delay(500);
-       char sendBack[2] = {'o', 'h'};
        Serial.write(inputBuffer, 17);
   }
 }

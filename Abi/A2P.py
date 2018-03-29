@@ -1,3 +1,4 @@
+
 import serial
 
 arduino = serial.Serial('/dev/ttyACM0', 115200, timeout=0.1)
@@ -11,4 +12,4 @@ while True:
 	data = arduino.readline()         
 	if data:                       #readline() will occasionaly grab a blank line
 		sample = data.decode("utf-8")
-		print(sample[0])
+		print(sample)

@@ -5,6 +5,6 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.write("1Hello World from Arduino!");
+  Serial.write("Hello World from Arduino!");
   delay(1000);
 }
