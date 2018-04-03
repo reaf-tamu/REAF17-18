@@ -7,7 +7,7 @@ ap.add_argument("-i", "--image", help = "path to the image")
 args=vars(ap.parse_args())
 
 boundaries = [
-	([0, 50, 150], [130, 220, 255]),
+	([0, 50, 145], [130, 220, 255]),
 ]
 
 cap = cv2.VideoCapture(0)
