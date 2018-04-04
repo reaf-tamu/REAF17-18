@@ -27,11 +27,14 @@ while(True):
 	    # the mask
 	    mask = cv2.inRange(frame, lower, upper)
 	    output = cv2.bitwise_and(frame, frame, mask = mask)
-     
+	    
+	    gray=cv2.cvtColor(output, cv2.COLOR_BGR2GRAY)
+	    retval,fram=cv2.threshold(gray, 100, 255, cv2.THRESH_BINARY)
 	    # show the images
 	      
     cv2.imshow("original", frame)
     cv2.imshow("orange and the new black", output)
+    cv2.imshow("thresh", fram)
     
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
