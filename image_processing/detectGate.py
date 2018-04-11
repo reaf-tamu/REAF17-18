@@ -2,6 +2,9 @@ import numpy as np
 import imutils
 import argparse
 import cv2
+from ShapeDetector import ShapeDetector
+
+#this is detectOrange + shapeDetection
 
 ap=argparse.ArgumentParser()
 ap.add_argument("-i", "--image", help = "path to the image")
@@ -15,10 +18,9 @@ cap = cv2.VideoCapture(0)
 while(True):
     # Capture frame-by-frame
     ret, frame = cap.read()
-    
-    #edge = cv2.Canny(frame,200,100)
-    #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     resized = imutils.resize(frame, width=300)
+    ratio = frame.shape[0] / float(resized.shape[0])
+    
     frame2 = cv2.GaussianBlur(resized, (5, 5), 0)
     
     for (lower, upper) in boundaries:
@@ -33,9 +35,30 @@ while(True):
 	    
 	    gray=cv2.cvtColor(output, cv2.COLOR_BGR2GRAY)
 	    retval,fram=cv2.threshold(gray, 100, 255, cv2.THRESH_BINARY)
-	    # show the images
+	    
+	     
+	    	    
 	      
-    cv2.imshow("original", frame)
+    # find contours in the thresholded image and initialize the
+    # shape detector
+    cnts = cv2.findContours(gray.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    cnts = cnts[0] if imutils.is_cv2() else cnts[1]
+    sd = ShapeDetector()	    
+	    
+    for c in cnts:
+	    # compute the center of the contour, then detect the name of the
+	    # shape using only the contour
+	    shape = sd.detect(c)
+	     
+	    # multiply the contour (x, y)-coordinates by the resize ratio,
+	    # then draw the contours and the name of the shape on the image
+	    c = c.astype("float")
+	    c *= ratio
+	    c = c.astype("int")
+	    cv2.drawContours(frame, [c], -1, (0, 255, 0), 2)
+	    
+	    cv2.imshow("original", frame)    
+	    
     #cv2.imshow("orange and the new black", output)
     cv2.imshow("thresh", fram)
     
