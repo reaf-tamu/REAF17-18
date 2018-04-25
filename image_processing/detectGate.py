@@ -46,8 +46,7 @@ while(True):
     sd = ShapeDetector()	    
 	    
     for c in cnts:
-	    # compute the center of the contour, then detect the name of the
-	    # shape using only the contour
+	    # detect the shapes
 	    shape = sd.detect(c)
 	     
 	    # multiply the contour (x, y)-coordinates by the resize ratio,

@@ -7,6 +7,8 @@ ap=argparse.ArgumentParser()
 ap.add_argument("-i", "--image", help = "path to the image")
 args=vars(ap.parse_args())
 
+#boundaries of what the program will consider "orange"
+#(BGR format)
 boundaries = [
 	([0, 50, 145], [130, 220, 255]),
 ]
